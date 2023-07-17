@@ -14,8 +14,26 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ghcr.io/bhuism/p1monitor:latest       
-    - name: Push the Docker image
-      run: docker push ghcr.io/bhuism/p1monitor:latest
 
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag europe-west4-docker.pkg.dev/impl-383520/docker/p1monitor:latest
+
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+    - name: Set up gcloud Cloud SDK environment
+      uses: google-github-actions/setup-gcloud@v1.1.1
+      with:
+        project_id: ${{ env.PROJECT_ID }}
+
+    - name: 'Configure docker'
+      run: |        
+        gcloud auth configure-docker europe-west4-docker.pkg.dev
+
+    - name: 'Push image to GCR'
+      run: |
+        env
+        docker push europe-west4-docker.pkg.dev/impl-383520/docker/p1monitor:latest
