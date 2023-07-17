@@ -57,20 +57,20 @@ sudo chmod 660 *_lib.py
 sudo ls P1*|grep -v py|xargs -n 1 chmod 750
 
 # make p1monitor log folder (new from june 2019)
-sudo mkdir -p p1monitor $LOG_PATH
+sudo /bin/mkdir -p p1monitor $LOG_PATH $WWW_DOWLOAD_PATH $EXPORT_PATH $RAMDISK
 sudo /bin/chown p1mon:p1mon $LOG_PATH $WWW_DOWLOAD_PATH $EXPORT_PATH $RAMDISK
 sudo /bin/chmod 775 $LOG_PATH 
 sudo /bin/chmod 770 $WWW_DOWLOAD_PATH $EXPORT_PATH
 
 #PHP sessions path, PHP will not create this directory structure automatically
 echo "[*] PHP folder $PHP_SESSIONS wordt aangemaakt."
-sudo /usr/bin/mkdir -p $PHP_SESSIONS
-sudo /usr/bin/chmod 733 $PHP_SESSIONS
-sudo /usr/bin/chmod +t $PHP_SESSIONS
+sudo /bin/mkdir -p $PHP_SESSIONS
+sudo /bin/chmod 733 $PHP_SESSIONS
+sudo /bin/chmod +t $PHP_SESSIONS
 
 cd $LOG_PATH
-sudo /bin/chown p1mon:p1mon *.log
-sudo /bin/chmod 664 *.log
+sudo /bin/chown -f p1mon:p1mon *.log
+sudo /bin/chmod -f 664 *.log
 
 # clean log files on any action, also done by the watchdog
 # script clean when gets full. Should never happen ;)
