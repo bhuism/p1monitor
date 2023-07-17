@@ -5,7 +5,7 @@ FROM debian:bullseye-slim
 ENV TZ="Europe/Amsterdam"
 
 # Install packages
-RUN apt-get update && apt-get upgrade -y && apt-get install -y python3-venv python3-cryptography python3-pip python3-bcrypt nginx-full php-fpm sqlite3 php-sqlite3 python3-cairo python3-apt vim cron sudo logrotate curl iputils-ping iproute2 libffi-dev socat python3-nacl && apt-get clean
+RUN apt-get -qq update && apt-get -qq upgrade -y && apt-get -qq install -y python3-venv python3-cryptography python3-pip python3-bcrypt nginx-full php-fpm sqlite3 php-sqlite3 python3-cairo python3-apt vim cron sudo logrotate curl iputils-ping iproute2 libffi-dev socat python3-nacl && apt-get -qq clean
 
 RUN addgroup -gid 997 gpio && addgroup -gid 1001 p1mon && adduser --gid 1001 --disabled-password --gecos "P1Mon" p1mon && usermod -aG p1mon www-data && usermod -aG www-data,gpio,dialout p1mon
 
